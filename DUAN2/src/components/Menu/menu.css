@@ -1,0 +1,62 @@
+.menu {
+    display: inline-flex;
+    margin-top: 17px;
+    margin-left: 33px;
+    width: 252px;
+    height: 572px;
+    flex-direction: column;
+    gap: 59px;
+}
+.listMenu {
+    /* flex: 1; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 252px;
+    height: 289px;
+}
+.listMenu .menu_item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 252px;
+    height: 56px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.listMenu .menu_item .title {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 26px;
+    /* identical to box height, or 144% */
+    letter-spacing: 0.015em;
+    /* Text */
+    color: #1e0d03;
+    opacity: 0.6;
+}
+
+.listMenu .menu_item .icon svg {
+    margin-left: 26px;
+    margin-right: 14px;
+    opacity: 0.6;
+    width: 18px;
+    height: 20px;
+}
+.active {
+    background: #ffb800;
+}
+.menu_item.active .title {
+    color: #fff;
+    opacity: 1;
+}
+.menu_item.active .icon svg {
+    color: #fff;
+    opacity: 1;
+}
+.listMenu .menu_item {
+    color: #1e0d03;
+    text-decoration: none;
+}

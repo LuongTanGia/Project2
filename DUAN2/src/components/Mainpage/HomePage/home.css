@@ -1,0 +1,151 @@
+.homePage {
+    display: inline-flex;
+    /* justify-content: center; */
+    flex-direction: column;
+    /* align-items: center; */
+    margin: 24px 24px;
+}
+.homePage .title {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 54px;
+    /* identical to box height, or 150% */
+    /* Text */
+    color: #1e0d03;
+    margin-bottom: 32px;
+}
+.homePage .ChartLine {
+    width: 1488px;
+    height: 327px;
+    margin-bottom: 40px;
+}
+.homePage .ChartLine,
+.DoughChart {
+    width: 1488px;
+    height: 327px;
+}
+.LineChart_desc {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.LineChart_desc .desc {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 28px;
+    /* identical to box height, or 156% */
+    /* Text */
+    color: #1e0d03;
+}
+.homePage .DoughChart {
+    height: calc(963px / 2 - 48px);
+    display: flex;
+    justify-content: flex-start;
+    gap: 100px;
+    align-items: center;
+}
+.homePage .DoughChart .TotalBox {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* align-items: ; */
+}
+.homePage .DoughChart .TotalBox .desc {
+    /* 14 medium */
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    /* identical to box height, or 157% */
+    /* Text */
+    color: #1e0d03;
+    opacity: 0.5;
+}
+.homePage .DoughChart .TotalBox .totalPrice {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    /* identical to box height, or 125% */
+    /* Text */
+    color: #1e0d03;
+    margin-bottom: 83px;
+}
+.homePage .DoughChart .TotalBox .totalPrice span {
+    margin-left: 4px;
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    /* identical to box height, or 157% */
+    /* Text */
+    color: #1e0d03;
+}
+.homePage .DoughChart .DoughChart_box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.homePage .DoughChart .DoughChart_box .chartDesc {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 28px;
+    /* identical to box height, or 156% */
+    /* Text */
+    color: #1e0d03;
+    margin-bottom: 25px;
+}
+.homePage .DoughChart .DescChart {
+    margin-right: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    /* align-items: center; */
+    flex-direction: column;
+}
+.homePage .DoughChart .DescChart .On,
+.homePage .DoughChart .DescChart .Off {
+    margin-left: 20px;
+    position: relative;
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    /* identical to box height, or 157% */
+
+    /* Text */
+
+    color: #1e0d03;
+}
+.homePage .DoughChart .DescChart .Off::before {
+    left: -50px;
+    content: "";
+    position: absolute;
+    width: 44px;
+    height: 20px;
+    background: #ff8a48;
+    border-radius: 4px;
+}
+.homePage .DoughChart .DescChart .On::before {
+    content: "";
+    left: -50px;
+
+    position: absolute;
+    width: 44px;
+    height: 20px;
+    background: #4f75ff;
+    border-radius: 4px;
+}

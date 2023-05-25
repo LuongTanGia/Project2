@@ -1,0 +1,39 @@
+canvas.ChartLine {
+    width: 1488px !important;
+    height: 327px !important;
+    font-family: "Montserrat" !important;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px !important;
+    line-height: 22px;
+    /* identical to box height, or 157% */
+    /* Grey */
+    color: #888888;
+}
+canvas.DougChart {
+    width: 246px !important;
+    height: 246px !important;
+}
+.DougChartBox {
+    position: relative;
+}
+.DougChart_On,
+.DougChart_Off {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 63px;
+    height: 46px;
+    background: #ffffff;
+    box-shadow: 0px 0px 50px rgba(50, 50, 71, 0.25);
+    border-radius: 12px;
+}
+.DougChart_On {
+    top: 40%;
+    right: -20px;
+}
+.DougChart_Off {
+    top: 60%;
+    left: -20px;
+}

@@ -1,0 +1,68 @@
+.header {
+    display: inline-flex;
+    justify-content: space-between;
+    margin-top: 17px;
+    margin-left: 36px;
+    width: 1567px;
+    height: 48px;
+}
+.header .search {
+    display: inline-block;
+    position: relative;
+}
+.search-input {
+    width: 470px;
+    height: 48px;
+    border: none;
+    background: #ede6e6;
+    border-radius: 12px;
+    padding: 0px 12px;
+    font-family: "Montserrat";
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    /* Text */
+    color: #1e0d03;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #ffb800;
+    border: 2px solid #f9d886;
+}
+.search .input_icon svg {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 12px;
+    right: 14px;
+    cursor: pointer;
+}
+.search-input:focus ~ .input_icon svg {
+    opacity: 0.5;
+}
+
+.acc_mail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    width: 144px;
+    height: 48px;
+}
+.acc_mail .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 30px;
+    object-fit: cover;
+    background-position: center center;
+}
+.acc_mail .mail_icon svg,
+.acc_mail .bell_icon svg {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+}
