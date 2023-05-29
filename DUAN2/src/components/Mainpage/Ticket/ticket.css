@@ -1,4 +1,13 @@
 .Ticket_page {
+    margin-left: 36px;
+    margin-top: 20px;
+    background: #ffffff;
+    width: 1567px;
+    height: 963px;
+    border-radius: 24px;
+}
+
+.Ticket_page_content {
     display: inline-block;
     margin: 24px;
 }
@@ -157,9 +166,8 @@ tr {
     align-items: center;
     width: 114px;
     height: 31px;
-    background: #eaf1f8;
     /* Grey/5 */
-    border: 1px solid #919dba;
+    border: 1px solid;
     border-radius: 4px;
     font-family: "Montserrat";
     font-style: normal;
@@ -189,6 +197,9 @@ tr {
 
 .table tbody .header_table .TrangThai.Off {
     color: #03ac00;
+    background-color: rgba(0, 255, 0, 0.1);
+    /* Grey/5 */
+    border: 1px solid;
 }
 .table tbody .header_table .TrangThai.Off::after {
     background: #03ac00;
@@ -196,9 +207,22 @@ tr {
 .table tbody .header_table .TrangThai.On {
     width: 101px;
     color: #919dba;
+    background: rgba(145, 157, 186, 0.1);
+    /* Grey/5 */
+    border: 1px solid;
 }
 .table tbody .header_table .TrangThai.On::after {
     background: #919dba;
+}
+.table tbody .header_table .TrangThai.Het {
+    width: 101px;
+    color: #fd5959;
+    background-color: rgba(255, 0, 0, 0.1);
+    /* Grey/5 */
+    border: 1px solid;
+}
+.table tbody .header_table .TrangThai.Het::after {
+    background: #fd5959;
 }
 .Ticket_center {
     display: flex;
@@ -500,4 +524,15 @@ tr {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.btn_editTicket {
+    margin-left: 40px;
+    outline: none;
+    border: none;
+    background: transparent;
+}
+.btn_editTicket:focus {
+    outline: none;
+    border: none;
+    background: transparent;
 }

@@ -5,6 +5,15 @@
     /* align-items: center; */
     margin: 24px 24px;
 }
+.HomeBox {
+    width: 1567px;
+    height: 963px;
+
+    background: #ffffff;
+    border-radius: 24px;
+    margin-left: 36px;
+    margin-top: 20px;
+}
 .homePage .title {
     font-family: "Montserrat";
     font-style: normal;

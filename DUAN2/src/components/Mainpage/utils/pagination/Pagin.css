@@ -1,0 +1,40 @@
+.page_item,
+.page_link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    border: none;
+    outline: none;
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    display: flex;
+    align-items: center;
+    /* Text */
+    color: #1e0d03;
+}
+.activeLink {
+    width: 24px;
+    height: 24px;
+    /* Yellow/1 */
+    color: #ff993c;
+    border: 1px solid #ff993c;
+    border-radius: 4px;
+}
+.page_item button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+.page_item button svg polygon {
+    color: #ff993c;
+}

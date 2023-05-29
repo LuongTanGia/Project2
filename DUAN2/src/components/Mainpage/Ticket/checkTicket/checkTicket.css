@@ -1,0 +1,169 @@
+.Check_ticket_page {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Ticket_page.Ticket_Check_Left {
+    width: 1097px;
+    height: 963px;
+    background: #ffffff;
+    border-radius: 24px;
+}
+.header_table_check.header_table {
+    width: 1049px;
+    height: 48px;
+    display: flex;
+}
+
+.header_table_check.header_table th {
+    width: 150px !important;
+    display: flex;
+    justify-content: flex-start !important;
+    align-items: center;
+}
+.header_table_check.header_table td {
+    width: 150px !important;
+    display: flex;
+    justify-content: flex-start !important;
+    align-items: center;
+}
+.header_table_check.header_table th:nth-child(1) {
+    width: 50px !important;
+}
+.header_table_check.header_table td:nth-child(1) {
+    width: 50px !important;
+}
+.header_table_check.header_table th:nth-child(3) {
+    width: 301px !important;
+}
+.header_table_check.header_table td:nth-child(3) {
+    width: 301px !important;
+}
+.header_table_check.header_table th:nth-child(6) {
+    width: 201px !important;
+}
+.header_table_check.header_table td:nth-child(6) {
+    width: 201px !important;
+}
+.header_table_check.header_table th:nth-child(4) {
+    width: 201px !important;
+}
+.header_table_check.header_table td:nth-child(4) {
+    width: 201px !important;
+}
+.filter_box {
+    margin-top: 24px;
+    width: 440px;
+    height: 963px;
+    /* border: 1px solid #000; */
+    background: #ffffff;
+    border-radius: 24px;
+}
+.filter_box .filter_content {
+    margin: 16px 24px;
+}
+.filter_box .filter_content .title {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    /* identical to box height */
+    display: flex;
+    align-items: center;
+    color: #1e0d03;
+}
+.filter_box .content_body .TrangThaiBox {
+    margin-top: 32px;
+    display: flex;
+    /* justify-content: center; */
+    align-items: flex-start;
+    gap: 26px;
+}
+.filter_box .content_body .TrangThaiBox .title {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 26px;
+    /* identical to box height, or 162% */
+
+    display: flex;
+    align-items: center;
+
+    /* Text */
+
+    color: #1e0d03;
+
+    opacity: 0.8;
+}
+.filter_box .content_body .TrangThaiBox .checkBox {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+.filter_box .content_body .TrangThaiBox .checkBox .input_check {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row-reverse;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+.content_body .DatePickerBox .title {
+    width: 80px;
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 26px;
+    /* identical to box height, or 162% */
+
+    display: flex;
+    align-items: center;
+
+    /* Text */
+
+    color: #1e0d03;
+
+    opacity: 0.8;
+}
+.content_body .DatePickerBox .date_box {
+    display: flex;
+    justify-content: flex-start;
+    gap: 102px;
+    align-items: center;
+    margin-bottom: 24px;
+}
+.content_footer {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content_footer .btn_filter_check {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
+    height: 48px;
+    background: transparent;
+    /* Yellow/1 */
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+    /* identical to box height, or 144% */
+
+    display: flex;
+    align-items: center;
+
+    /* Yellow/1 */
+
+    color: #ff993c;
+    border: 1px solid #ff993c;
+    border-radius: 8px;
+}

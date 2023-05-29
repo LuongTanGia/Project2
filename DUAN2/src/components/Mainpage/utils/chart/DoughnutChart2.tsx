@@ -17,12 +17,19 @@ export const data = {
         },
     ],
 };
+export const options = {
+    plugins: {
+        legend: {
+            display: false,
+        },
+    },
+};
 
 function doughnut2() {
     return (
         <>
             <div className="DougChartBox">
-                <Doughnut data={data} className="DougChart" />
+                <Doughnut data={data} options={options} className="DougChart" />
                 <div className="DougChart_On">56024 </div>
                 <div className="DougChart_Off">13568</div>
             </div>

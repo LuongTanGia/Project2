@@ -83,6 +83,9 @@ const lineChar: React.FC = () => {
             tooltip: {
                 backgroundColor: "#FF8A48",
             },
+            legend: {
+                display: false,
+            },
         },
         scales: {
             // x: {
