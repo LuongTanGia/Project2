@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../../store/store";
-import { searchTickets, setSearchTerm } from "../../../../store/ticketSlice";
+import {
+    searchTickets,
+    setSearchTerm,
+    updateTinhTrangForAllItems,
+} from "../../../../store/ticketSlice";
+import { database } from "../../../../firebase/firebase";
+import { ref, child, get, update, set } from "firebase/database";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FiFilter } from "react-icons/fi";
 import "./checkTicket.css";
@@ -26,9 +32,11 @@ const CheckTicket: React.FC = () => {
     const { data, loading, error } = useSelector(
         (state: RootState) => state.ticket
     );
+
+    const id = localStorage.getItem("Tickets");
     const dispatch: ThunkDispatch<RootState, null, AnyAction> = useDispatch();
     useEffect(() => {
-        dispatch(searchTickets());
+        dispatch(searchTickets(id || ""));
     }, [dispatch]);
 
     const searchTerm = useSelector(
@@ -36,7 +44,7 @@ const CheckTicket: React.FC = () => {
     );
 
     const handleSearch = () => {
-        dispatch(searchTickets());
+        dispatch(searchTickets(id || ""));
     };
 
     const handleSearchTermChange = (
@@ -44,11 +52,40 @@ const CheckTicket: React.FC = () => {
     ) => {
         dispatch(setSearchTerm(event.target.value));
     };
-
+    const [iditem, setId] = useState<string>(
+        localStorage.getItem("Tickets") || "Tickets"
+    );
+    const handleUpdateTinhTrangForAllItems = () => {
+        const updatedTrangThai = "Đã đối soát";
+        dispatch(updateTinhTrangForAllItems(updatedTrangThai, iditem));
+    };
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+    const [count, setCount] = useState<number>(0);
+
+    const countUnupdatedItems = async () => {
+        const dbRef = ref(database);
+        const snapshot = await get(child(dbRef, `${iditem}/Listve`));
+        let count = 0;
+        if (snapshot.exists()) {
+            const ticketList = snapshot.val();
+
+            Object.keys(ticketList).forEach((itemId) => {
+                if (ticketList[itemId].TinhTrang !== "Đã đối soát") {
+                    count++;
+                }
+            });
+            setCount(count);
+        } else {
+            console.log("Không có dữ liệu");
+        }
+    };
+
+    countUnupdatedItems();
+    console.log(count);
 
     if (loading) {
         return (
@@ -77,7 +114,7 @@ const CheckTicket: React.FC = () => {
             <div className="Ticket_page Ticket_Check_Left">
                 <div className="Ticket_page_content">
                     <h1 className="title">Danh sách vé</h1>
-                    <div className="Ticket_center">
+                    <div className="Ticket_center CheckTicket_button">
                         <div className="search_Ticket">
                             <input
                                 type="text"
@@ -89,6 +126,20 @@ const CheckTicket: React.FC = () => {
                             <i className="input_icon">
                                 <AiOutlineSearch onClick={handleSearch} />
                             </i>
+                        </div>
+                        <div>
+                            <div>
+                                <button
+                                    className={`button_CheckTicket ${
+                                        count > 0 ? "" : "disabled_Checked"
+                                    }`}
+                                    onClick={handleUpdateTinhTrangForAllItems}
+                                >
+                                    {count > 0
+                                        ? "Chốt đối soát"
+                                        : "Xuất file (.csv)"}
+                                </button>
+                            </div>
                         </div>
                         {/* <div className="filter">
                         <button
@@ -194,6 +245,15 @@ const CheckTicket: React.FC = () => {
             <div className="filter_box">
                 <div className="filter_content">
                     <h5 className="title">Lọc vé</h5>
+                    <div className="select_box">
+                        <select>
+                            {currentItems.map((name, index) => (
+                                <option key={index} value={name.TenSuKien}>
+                                    {name.TenSuKien}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                     <div className="content_body">
                         <div className="TrangThaiBox">
                             <p className="title">Tình trạng sử dụng</p>

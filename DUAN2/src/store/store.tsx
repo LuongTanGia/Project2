@@ -6,9 +6,11 @@ import {
 } from "@reduxjs/toolkit";
 
 import ticketReducer from "./ticketSlice";
+import HometicketReducer from "./HomeTicket";
 
 const rootReducer = combineReducers({
     ticket: ticketReducer,
+    hometicket: HometicketReducer,
 });
 
 const store = configureStore({

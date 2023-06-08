@@ -67,6 +67,9 @@ const EditTicketComponent: React.FC<EditTicketComponentProps> = ({
             setTinhTrang(ticket.TinhTrang); // this
         }
     }, [ticket]);
+    const [iditem, setId] = useState<string>(
+        localStorage.getItem("Tickets") || "Tickets"
+    );
 
     const handleSave = () => {
         const updatedTicket = {
@@ -82,7 +85,7 @@ const EditTicketComponent: React.FC<EditTicketComponentProps> = ({
             TinhTrang: tinhtrang,
         };
 
-        dispatch(updateTicket(updatedTicket));
+        dispatch(updateTicket(updatedTicket, iditem));
     };
     const handleClose = () => {
         setOpenTicketId(null);

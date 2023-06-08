@@ -536,3 +536,47 @@ tr {
     border: none;
     background: transparent;
 }
+.TicketNameBox {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.TicketNameBox .GoiTicket {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 26px;
+    /* identical to box height, or 144% */
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.015em;
+    color: #919dba;
+    margin-right: 50px;
+    cursor: pointer;
+}
+.TicketNameBox .GoiTicket.active_Goi {
+    position: relative;
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+    /* identical to box height, or 144% */
+    display: flex;
+    align-items: center;
+    /* Yellow/1 */
+    color: #ff993c;
+}
+.TicketNameBox .GoiTicket.active_Goi::before {
+    position: absolute;
+    content: "";
+    width: 128px;
+    height: 4px;
+    bottom: -10px;
+    left: 0px;
+    /* Yellow/1 */
+    background: #ff993c;
+    border-radius: 7px;
+}

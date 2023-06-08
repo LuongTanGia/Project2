@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store/store";
-import { searchTickets, setSearchTerm } from "../../../store/ticketSlice";
+// import { searchHomeTickets, setSearchHomeTerm } from "../../../store/ticketSlice";
 import {
     searchHomeTickets,
     setSearchHomeTerm,
 } from "../../../store/HomeTicket";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FiFilter } from "react-icons/fi";
-import "./ticket.css";
+import { SlNote } from "react-icons/sl";
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 import Loading from "../utils/loading/Loading";
 import { DatePicker } from "antd";
 import Pagination from "../utils/pagination/Pagination";
 import "react-toastify/dist/ReactToastify.css";
-import TicketRow from "./ticketTable/ticketRow";
 
-import EditTicketComponent from "./updateTicket/updateTicket";
+import { HiEllipsisVertical } from "react-icons/hi2";
 
-const Ticket: React.FC = () => {
+const HomeTicket: React.FC = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [itemsPerPage] = useState<number>(10);
     const [openTicketId, setOpenTicketId] = useState(null);
@@ -31,42 +30,33 @@ const Ticket: React.FC = () => {
     const onChange = (date: any, dateString: any) => {
         console.log(date, dateString);
     };
-    const { data, loading, error } = useSelector(
-        (state: RootState) => state.ticket
-    );
-    const { HomeData } = useSelector((state: RootState) => state.hometicket);
 
-    const [id, setId] = useState<string>(
-        localStorage.getItem("Tickets") || "Tickets"
+    const { HomeData, loading, error } = useSelector(
+        (state: RootState) => state.hometicket
     );
 
     const dispatch: ThunkDispatch<RootState, null, AnyAction> = useDispatch();
     useEffect(() => {
-        localStorage.setItem("Tickets", id || "Tickets");
-        dispatch(searchTickets(id));
         dispatch(searchHomeTickets());
-    }, [dispatch, id]);
-    const handleTicketClick = (ticketId: string) => {
-        setId(ticketId);
-    };
-    const searchTerm = useSelector(
-        (state: RootState) => state.ticket.searchTerm
+    }, [dispatch]);
+
+    const searchHomeTerm = useSelector(
+        (state: RootState) => state.hometicket.searchHomeTerm
     );
 
-    const handleSearch = () => {
-        dispatch(searchTickets(id));
+    const handleHomeSearch = () => {
         dispatch(searchHomeTickets());
     };
 
-    const handleSearchTermChange = (
+    const handleSearchHomeTermChange = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
-        dispatch(setSearchTerm(event.target.value));
+        dispatch(setSearchHomeTerm(event.target.value));
     };
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = HomeData.slice(indexOfFirstItem, indexOfLastItem);
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
     if (loading) {
@@ -89,32 +79,18 @@ const Ticket: React.FC = () => {
         <div className="Ticket_page">
             <div className="Ticket_page_content">
                 <h1 className="title">Danh sách vé</h1>
-                <div className="TicketNameBox">
-                    {HomeData.map((Hometicket, index) => (
-                        <h2
-                            className={`GoiTicket ${
-                                Hometicket.id === id ? "active_Goi" : ""
-                            }`}
-                            key={index}
-                            onClick={() => {
-                                handleTicketClick(Hometicket.id);
-                            }}
-                        >
-                            {Hometicket.TenGoi}
-                        </h2>
-                    ))}
-                </div>
+
                 <div className="Ticket_center">
                     <div className="search_Ticket">
                         <input
                             type="text"
                             className="search-input"
                             placeholder="Tìm bằng số vé"
-                            value={searchTerm}
-                            onChange={handleSearchTermChange}
+                            value={searchHomeTerm}
+                            onChange={handleSearchHomeTermChange}
                         />
                         <i className="input_icon">
-                            <AiOutlineSearch onClick={handleSearch} />
+                            <AiOutlineSearch onClick={handleHomeSearch} />
                         </i>
                     </div>
                     <div className="filter">
@@ -183,7 +159,7 @@ const Ticket: React.FC = () => {
                                                         name="status"
                                                         value=""
                                                         onChange={
-                                                            handleSearchTermChange
+                                                            handleSearchHomeTermChange
                                                         }
                                                     />
                                                 </div>
@@ -196,7 +172,7 @@ const Ticket: React.FC = () => {
                                                         name="status"
                                                         value="On"
                                                         onChange={
-                                                            handleSearchTermChange
+                                                            handleSearchHomeTermChange
                                                         }
                                                     />
                                                 </div>
@@ -209,7 +185,7 @@ const Ticket: React.FC = () => {
                                                         name="status"
                                                         value="Off"
                                                         onChange={
-                                                            handleSearchTermChange
+                                                            handleSearchHomeTermChange
                                                         }
                                                     />
                                                 </div>
@@ -222,7 +198,7 @@ const Ticket: React.FC = () => {
                                                         name="status"
                                                         value="Het"
                                                         onChange={
-                                                            handleSearchTermChange
+                                                            handleSearchHomeTermChange
                                                         }
                                                     />
                                                 </div>
@@ -242,7 +218,7 @@ const Ticket: React.FC = () => {
                                                         name="checkIn"
                                                         value=""
                                                         onChange={
-                                                            handleSearchTermChange
+                                                            handleSearchHomeTermChange
                                                         }
                                                     />
                                                 </div>
@@ -255,7 +231,7 @@ const Ticket: React.FC = () => {
                                                         name="checkIn"
                                                         value="Cổng 1"
                                                         onChange={
-                                                            handleSearchTermChange
+                                                            handleSearchHomeTermChange
                                                         }
                                                     />
                                                 </div>
@@ -268,7 +244,7 @@ const Ticket: React.FC = () => {
                                                         name="checkIn"
                                                         value="Cổng 2"
                                                         onChange={
-                                                            handleSearchTermChange
+                                                            handleSearchHomeTermChange
                                                         }
                                                     />
                                                 </div>
@@ -281,7 +257,7 @@ const Ticket: React.FC = () => {
                                                         name="checkIn"
                                                         value="Cổng 3"
                                                         onChange={
-                                                            handleSearchTermChange
+                                                            handleSearchHomeTermChange
                                                         }
                                                     />
                                                 </div>
@@ -294,7 +270,7 @@ const Ticket: React.FC = () => {
                                                         name="checkIn"
                                                         value="Cổng 4"
                                                         onChange={
-                                                            handleSearchTermChange
+                                                            handleSearchHomeTermChange
                                                         }
                                                     />
                                                 </div>
@@ -307,7 +283,7 @@ const Ticket: React.FC = () => {
                                                         name="checkIn"
                                                         value="Cổng 5"
                                                         onChange={
-                                                            handleSearchTermChange
+                                                            handleSearchHomeTermChange
                                                         }
                                                     />
                                                 </div>
@@ -319,7 +295,7 @@ const Ticket: React.FC = () => {
                                             type="button"
                                             className="btn btn_filter-model"
                                             data-dismiss="modal"
-                                            onClick={handleSearch}
+                                            onClick={handleHomeSearch}
                                         >
                                             Lọc
                                         </button>
@@ -341,18 +317,51 @@ const Ticket: React.FC = () => {
                                 <th>Ngày sử dụng</th>
                                 <th>Ngày xuất vé</th>
                                 <th>Cổng check - in</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             {currentItems.length > 0 ? (
                                 <>
                                     {currentItems.map((ticket, index) => (
-                                        <TicketRow
-                                            key={ticket.id}
-                                            ticket={ticket}
-                                            index={index}
-                                            handleOpen={handleOpen}
-                                        />
+                                        <tr
+                                            key={ticket.id.toString()}
+                                            className="header_table"
+                                        >
+                                            <td className="stt">{++index}</td>
+                                            <td>{ticket.MaGoi}</td>
+                                            <td>{ticket.TenGoi}</td>
+                                            <td>{ticket.NgayApDung}</td>
+
+                                            <td>{ticket.NgayHetHan}</td>
+                                            <td>{ticket.GiaVe}</td>
+                                            <td>{ticket.GiaCombo}</td>
+                                            <td>
+                                                <span
+                                                    className={`TrangThai ${
+                                                        ticket.TinhTrang ==
+                                                        "Off"
+                                                            ? "Off"
+                                                            : ticket.TinhTrang ==
+                                                              "Het"
+                                                            ? "Het"
+                                                            : ""
+                                                    }
+
+                                `}
+                                                >
+                                                    {ticket.TinhTrang == "Off"
+                                                        ? "Đang áp dụng"
+                                                        : ticket.TinhTrang ==
+                                                          "Het"
+                                                        ? "Tắt"
+                                                        : ""}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <SlNote /> Cập nhật
+                                            </td>
+                                        </tr>
                                     ))}
                                 </>
                             ) : (
@@ -375,19 +384,6 @@ const Ticket: React.FC = () => {
                                 >
                                     <div className="modal-content modal-content2">
                                         {/* <div className="modal-header"></div> */}
-                                        <div className="modal-body modal-body2">
-                                            {openTicketId && (
-                                                <div className="popup">
-                                                    <div className="popup-content">
-                                                        <EditTicketComponent
-                                                            ticketId={
-                                                                openTicketId
-                                                            }
-                                                        />
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -425,7 +421,7 @@ const Ticket: React.FC = () => {
                     </table>
                     <Pagination
                         itemsPerPage={itemsPerPage}
-                        totalItems={data.length}
+                        totalItems={HomeData.length}
                         paginate={paginate}
                         currentPage={currentPage}
                     />
@@ -435,4 +431,4 @@ const Ticket: React.FC = () => {
     );
 };
 
-export default Ticket;
+export default HomeTicket;
