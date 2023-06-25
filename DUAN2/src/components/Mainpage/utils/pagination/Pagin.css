@@ -38,3 +38,8 @@
 .page_item button svg polygon {
     color: #ff993c;
 }
+.paginationBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

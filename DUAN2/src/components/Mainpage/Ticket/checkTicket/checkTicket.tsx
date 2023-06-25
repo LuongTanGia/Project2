@@ -232,14 +232,14 @@ const CheckTicket: React.FC = () => {
                         ))} */}
                             </tbody>
                         </table>
-                        <Pagination
-                            itemsPerPage={itemsPerPage}
-                            totalItems={data.length}
-                            paginate={paginate}
-                            currentPage={currentPage}
-                        />
                     </div>
                 </div>
+                <Pagination
+                    itemsPerPage={itemsPerPage}
+                    totalItems={data.length}
+                    paginate={paginate}
+                    currentPage={currentPage}
+                />
             </div>
 
             <div className="filter_box">

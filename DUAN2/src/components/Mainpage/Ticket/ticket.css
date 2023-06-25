@@ -541,8 +541,10 @@ tr {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    gap: 20px;
 }
 .TicketNameBox .GoiTicket {
+    width: 128px;
     font-family: "Montserrat";
     font-style: normal;
     font-weight: 500;
@@ -553,10 +555,11 @@ tr {
     align-items: center;
     letter-spacing: 0.015em;
     color: #919dba;
-    margin-right: 50px;
+    /* margin-right: 50px; */
     cursor: pointer;
 }
 .TicketNameBox .GoiTicket.active_Goi {
+    width: 128px;
     position: relative;
     font-family: "Montserrat";
     font-style: normal;

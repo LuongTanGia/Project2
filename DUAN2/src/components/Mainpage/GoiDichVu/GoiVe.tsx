@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store/store";
-// import { searchHomeTickets, setSearchHomeTerm } from "../../../store/ticketSlice";
 import {
     searchHomeTickets,
     setSearchHomeTerm,
@@ -12,16 +11,19 @@ import { SlNote } from "react-icons/sl";
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 import Loading from "../utils/loading/Loading";
-import { DatePicker } from "antd";
 import Pagination from "../utils/pagination/Pagination";
 import "react-toastify/dist/ReactToastify.css";
-
-import { HiEllipsisVertical } from "react-icons/hi2";
+import "./Goive.css";
+import CreateGoive from "./CreateGoive/creategoive";
+import EditHomeTicketForm from "./EditGoive/editgoive";
 
 const HomeTicket: React.FC = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [itemsPerPage] = useState<number>(10);
     const [openTicketId, setOpenTicketId] = useState(null);
+    const [selectedTicketId, setSelectedTicketId] = useState<string | null>(
+        null
+    );
 
     const [picker, setPicker] = useState<
         "date" | "time" | "month" | "week" | "quarter" | "year" | undefined
@@ -71,8 +73,8 @@ const HomeTicket: React.FC = () => {
         return <div>Error: {error}</div>;
     }
 
-    const handleOpen = (ticketId: any) => {
-        setOpenTicketId(ticketId);
+    const handleEditTicket = (ticketId: string) => {
+        setSelectedTicketId(ticketId);
     };
 
     return (
@@ -94,23 +96,21 @@ const HomeTicket: React.FC = () => {
                         </i>
                     </div>
                     <div className="filter">
-                        <button
-                            type="button"
-                            className="btn btn_filter"
-                            data-toggle="modal"
-                            data-target="#exampleModalCenter"
-                        >
-                            <FiFilter /> Lọc vé
-                        </button>
                         <button type="button" className="btn btn_xuat">
                             Xuất file (.csv)
                         </button>
+                        <button
+                            data-dismiss="modal"
+                            className="btn_Create"
+                            data-toggle="modal"
+                            data-target="#exampleModalCenter"
+                        >
+                            Thêm gói vé
+                        </button>
 
-                        {/* ------------------------------ */}
                         <div
                             className="modal fade"
                             id="exampleModalCenter"
-                            // tabindex="-1"
                             role="dialog"
                             aria-labelledby="exampleModalCenterTitle"
                             aria-hidden="true"
@@ -119,186 +119,29 @@ const HomeTicket: React.FC = () => {
                                 className="modal-dialog modal-dialog-centered"
                                 role="document"
                             >
-                                <div className="modal-content Model">
-                                    <div className="modal-header">
-                                        <h5
-                                            className="modal-title"
-                                            id="exampleModalLongTitle"
-                                        >
-                                            Lọc vé
-                                        </h5>
+                                <div className="modal-content modal-content_Home">
+                                    <div className="modal-body modal-body_Home">
+                                        <CreateGoive />
                                     </div>
-                                    <div className="modal-body">
-                                        <div className="DatePickerBox">
-                                            <div className="date_box">
-                                                <p className="title">Từ ngày</p>
-                                                <DatePicker
-                                                    onChange={onChange}
-                                                    picker={picker}
-                                                />
-                                            </div>
-                                            <div className="date_box">
-                                                <p className="title">Từ ngày</p>
-                                                <DatePicker
-                                                    onChange={onChange}
-                                                    picker={picker}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="StatusBox">
-                                            <p className="title">
-                                                Tình trạng sử dụng
-                                            </p>
-                                            <div className="checkBox">
-                                                <div className="input_check">
-                                                    <label htmlFor="status">
-                                                        Tất cả
-                                                    </label>
-                                                    <input
-                                                        type="radio"
-                                                        name="status"
-                                                        value=""
-                                                        onChange={
-                                                            handleSearchHomeTermChange
-                                                        }
-                                                    />
-                                                </div>
-                                                <div className="input_check">
-                                                    <label htmlFor="status">
-                                                        Đã sử dụng
-                                                    </label>
-                                                    <input
-                                                        type="radio"
-                                                        name="status"
-                                                        value="On"
-                                                        onChange={
-                                                            handleSearchHomeTermChange
-                                                        }
-                                                    />
-                                                </div>
-                                                <div className="input_check">
-                                                    <label htmlFor="status">
-                                                        Chưa sử dụng
-                                                    </label>
-                                                    <input
-                                                        type="radio"
-                                                        name="status"
-                                                        value="Off"
-                                                        onChange={
-                                                            handleSearchHomeTermChange
-                                                        }
-                                                    />
-                                                </div>
-                                                <div className="input_check">
-                                                    <label htmlFor="status">
-                                                        Hết hạn
-                                                    </label>
-                                                    <input
-                                                        type="radio"
-                                                        name="status"
-                                                        value="Het"
-                                                        onChange={
-                                                            handleSearchHomeTermChange
-                                                        }
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="CheckIn">
-                                            <p className="title">
-                                                Cổng Check - in
-                                            </p>
-                                            <div className="checkBox">
-                                                <div className="input_checkBox">
-                                                    <label htmlFor="checkIn">
-                                                        Tất cả
-                                                    </label>
-                                                    <input
-                                                        type="checkbox"
-                                                        name="checkIn"
-                                                        value=""
-                                                        onChange={
-                                                            handleSearchHomeTermChange
-                                                        }
-                                                    />
-                                                </div>
-                                                <div className="input_checkBox">
-                                                    <label htmlFor="checkIn">
-                                                        Cổng 1
-                                                    </label>
-                                                    <input
-                                                        type="checkbox"
-                                                        name="checkIn"
-                                                        value="Cổng 1"
-                                                        onChange={
-                                                            handleSearchHomeTermChange
-                                                        }
-                                                    />
-                                                </div>
-                                                <div className="input_checkBox">
-                                                    <label htmlFor="checkIn">
-                                                        Cổng 2
-                                                    </label>
-                                                    <input
-                                                        type="checkbox"
-                                                        name="checkIn"
-                                                        value="Cổng 2"
-                                                        onChange={
-                                                            handleSearchHomeTermChange
-                                                        }
-                                                    />
-                                                </div>
-                                                <div className="input_checkBox">
-                                                    <label htmlFor="checkIn">
-                                                        Cổng 3
-                                                    </label>
-                                                    <input
-                                                        type="checkbox"
-                                                        name="checkIn"
-                                                        value="Cổng 3"
-                                                        onChange={
-                                                            handleSearchHomeTermChange
-                                                        }
-                                                    />
-                                                </div>
-                                                <div className="input_checkBox">
-                                                    <label htmlFor="checkIn">
-                                                        Cổng 4
-                                                    </label>
-                                                    <input
-                                                        type="checkbox"
-                                                        name="checkIn"
-                                                        value="Cổng 4"
-                                                        onChange={
-                                                            handleSearchHomeTermChange
-                                                        }
-                                                    />
-                                                </div>
-                                                <div className="input_checkBox">
-                                                    <label htmlFor="checkIn">
-                                                        Cổng 5
-                                                    </label>
-                                                    <input
-                                                        type="checkbox"
-                                                        name="checkIn"
-                                                        value="Cổng 5"
-                                                        onChange={
-                                                            handleSearchHomeTermChange
-                                                        }
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="modal-footer">
-                                        <button
-                                            type="button"
-                                            className="btn btn_filter-model"
-                                            data-dismiss="modal"
-                                            onClick={handleHomeSearch}
-                                        >
-                                            Lọc
-                                        </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            className="modal fade"
+                            id="exampleModalCenter2"
+                            role="dialog"
+                            aria-labelledby="exampleModalCenterTitle"
+                            aria-hidden="true"
+                        >
+                            <div
+                                className="modal-dialog modal-dialog-centered"
+                                role="document"
+                            >
+                                <div className="modal-content modal-content_Home">
+                                    <div className="modal-body modal-body_Home">
+                                        <EditHomeTicketForm
+                                            ticketId={selectedTicketId}
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -310,13 +153,14 @@ const HomeTicket: React.FC = () => {
                         <thead>
                             <tr className="header_table">
                                 <th className="title">STT</th>
-                                <th>Booking code</th>
-                                <th>Số vé</th>
-                                <th>Tên sự kiện</th>
-                                <th>Tình trạng sử dụng</th>
-                                <th>Ngày sử dụng</th>
-                                <th>Ngày xuất vé</th>
-                                <th>Cổng check - in</th>
+                                <th>Mã gói</th>
+                                <th>Tên gói vé</th>
+
+                                <th>Ngày áp dụng</th>
+                                <th>Ngày hết hạn</th>
+                                <th>Giá vé (VNĐ/Vé)</th>
+                                <th>Giá Combo (VNĐ/Combo)</th>
+                                <th>Tình trạng</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -331,11 +175,20 @@ const HomeTicket: React.FC = () => {
                                             <td className="stt">{++index}</td>
                                             <td>{ticket.MaGoi}</td>
                                             <td>{ticket.TenGoi}</td>
-                                            <td>{ticket.NgayApDung}</td>
+                                            <td>
+                                                {ticket.NgayApDung}{" "}
+                                                {ticket.timeAD}
+                                            </td>
 
-                                            <td>{ticket.NgayHetHan}</td>
-                                            <td>{ticket.GiaVe}</td>
-                                            <td>{ticket.GiaCombo}</td>
+                                            <td>
+                                                {ticket.NgayHetHan}{" "}
+                                                {ticket.timeHH}
+                                            </td>
+                                            <td>{ticket.GiaVe} VNĐ</td>
+                                            <td>
+                                                {ticket.GiaCombo} VNĐ/{" "}
+                                                {ticket.SoveCB} Vé VNĐ
+                                            </td>
                                             <td>
                                                 <span
                                                     className={`TrangThai ${
@@ -358,8 +211,20 @@ const HomeTicket: React.FC = () => {
                                                         : ""}
                                                 </span>
                                             </td>
-                                            <td>
-                                                <SlNote /> Cập nhật
+                                            <td className="td_edit">
+                                                <span
+                                                    onClick={() =>
+                                                        handleEditTicket(
+                                                            ticket.id
+                                                        )
+                                                    }
+                                                    data-dismiss="modal"
+                                                    data-toggle="modal"
+                                                    data-target="#exampleModalCenter2"
+                                                >
+                                                    <SlNote />
+                                                    Cập nhật
+                                                </span>
                                             </td>
                                         </tr>
                                     ))}
@@ -369,54 +234,6 @@ const HomeTicket: React.FC = () => {
                                     <Loading />
                                 </>
                             )}
-
-                            <div
-                                className="modal fade"
-                                id="exampleModalCenter2"
-                                // tabindex="-1"
-                                role="dialog"
-                                aria-labelledby="exampleModalCenterTitle"
-                                aria-hidden="true"
-                            >
-                                <div
-                                    className="modal-dialog modal-dialog-centered"
-                                    role="document"
-                                >
-                                    <div className="modal-content modal-content2">
-                                        {/* <div className="modal-header"></div> */}
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* {currentItems.map((ticket, index) => (
-                            <tr
-                                key={ticket.id.toString()}
-                                className="header_table"
-                            >
-                                <td className="stt">{++index}</td>
-                                <td>{ticket.Bookingcode}</td>
-                                <td>{ticket.Sove}</td>
-                                <td>{ticket.TenSuKien}</td>
-                                <td>
-                                    <span
-                                        className={`TrangThai ${
-                                            ticket.TrangThai == "On"
-                                                ? "On"
-                                                : "Off"
-                                        }
-
-                                `}
-                                    >
-                                        {ticket.TrangThai == "On"
-                                            ? "Đã sử dụng"
-                                            : "Chưa sử dụng"}
-                                    </span>
-                                </td>
-                                <td>{ticket.NgaySuDung}</td>
-                                <td>{ticket.NgayXuatVe}</td>
-                                <td>{ticket.CongCheckIn}</td>
-                            </tr>
-                        ))} */}
                         </tbody>
                     </table>
                     <Pagination

@@ -22,7 +22,7 @@ const Pagination: React.FC<PaginationProps> = ({
     }
 
     return (
-        <div>
+        <div className="paginationBox">
             <ul className="pagination">
                 {currentPage > 1 && (
                     <li className="page_item">

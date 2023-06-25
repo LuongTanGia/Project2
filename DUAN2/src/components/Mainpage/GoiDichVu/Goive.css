@@ -1,0 +1,61 @@
+.btn_Create {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    border: none;
+    width: 164px;
+    height: 48px;
+
+    /* Yellow/1 */
+
+    background: #ff993c;
+    border-radius: 8px;
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+    /* identical to box height, or 144% */
+
+    display: flex;
+    align-items: center;
+
+    color: #ffffff;
+}
+button:focus {
+    border: none;
+    outline: none;
+}
+.modal-content {
+    width: 758px !important;
+    height: 628px !important;
+    border-radius: 16px;
+    background: #fff;
+}
+.modal-body.modal-body_Home {
+    width: 758px !important;
+    /* height: 628px !important; */
+    margin: 24px 32px;
+}
+.td_edit svg {
+    color: var(--yellow-1, #ff993c);
+    /* 14 medium */
+    font-size: 14px;
+    font-family: Montserrat;
+    font-weight: 500;
+    line-height: 22px;
+}
+.td_edit span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    gap: 3px;
+    color: var(--yellow-1, #ff993c);
+    /* 14 medium */
+    font-size: 14px;
+    font-family: Montserrat;
+    font-weight: 500;
+    line-height: 22px;
+}

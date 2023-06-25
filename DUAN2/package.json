@@ -16,6 +16,7 @@
     "@mui/x-date-pickers": "^6.5.0",
     "@mui/x-date-pickers-pro": "^6.5.0",
     "@reduxjs/toolkit": "^1.9.5",
+    "@types/redux-thunk": "^2.1.0",
     "antd": "^5.5.1",
     "date-fns": "^2.30.0",
     "moment": "^2.29.4",

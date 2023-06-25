@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk } from "./store";
 import { database } from "../firebase/firebase";
-import { ref, child, get, update, set } from "firebase/database";
+import { ref, child, get, update, set, push } from "firebase/database";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 
-interface HomeTicket {
+export interface HomeTicket {
     id: string;
     GiaCombo: string;
     GiaVe: string;
@@ -14,11 +14,50 @@ interface HomeTicket {
     NgayApDung: string;
     NgayHetHan: string;
     TenGoi: string;
+    SoveCB: number;
     TinhTrang: string;
+    timeAD: string;
+    timeHH: string;
+    Listve: {
+        Bookingcode: string;
+        CongCheckIn: string;
+        LoaiVe: string;
+        NgaySuDung: string;
+        NgayXuatVe: string;
+        Sove: string;
+        TenSuKien: string;
+        TinhTrang: string;
+        TrangThai: string;
+    }[];
+    TenSuKien: string;
 }
-
+interface CreateHomeTicket {
+    GiaCombo: string;
+    GiaVe: string;
+    MaGoi: string;
+    NgayApDung: string;
+    NgayHetHan: string;
+    TenGoi: string;
+    TinhTrang: string;
+    SoveCB: number;
+    Listve: {
+        Bookingcode: string;
+        CongCheckIn: string;
+        LoaiVe: string;
+        NgaySuDung: string;
+        NgayXuatVe: string;
+        Sove: string;
+        TenSuKien: string;
+        TinhTrang: string;
+        TrangThai: string;
+    }[];
+    timeAD: string;
+    timeHH: string;
+    TenSuKien: string;
+}
 interface HomeTicketState {
     HomeData: HomeTicket[];
+    dataCreated: CreateHomeTicket[];
     loading: boolean;
     error: string | null;
     searchHomeTerm: string;
@@ -26,6 +65,7 @@ interface HomeTicketState {
 
 const initialState: HomeTicketState = {
     HomeData: [],
+    dataCreated: [],
     loading: false,
     error: null,
     searchHomeTerm: "",
@@ -39,8 +79,11 @@ const HometicketSlice = createSlice({
             state.loading = true;
             state.error = null;
         },
-        fetchHomeTicketsSuccess(state, action: PayloadAction<HomeTicket[]>) {
-            state.HomeData = action.payload;
+        fetchHomeTicketsSuccess(
+            state,
+            action: PayloadAction<HomeTicket[] | undefined>
+        ) {
+            state.HomeData = action.payload || [];
             state.loading = false;
         },
         fetchHomeTicketsFailure(state, action: PayloadAction<string>) {
@@ -51,28 +94,47 @@ const HometicketSlice = createSlice({
             state.loading = false;
             state.searchHomeTerm = action.payload;
         },
-        updateHomeTicketStart(state) {
+        createHomeTicketStart(state) {
             state.loading = true;
             state.error = null;
         },
 
-        updateHomeTicketSuccess(state) {
+        createHomeTicketSuccess(state) {
             state.loading = false;
         },
 
-        updateHomeTicketFailure(state, action: PayloadAction<string>) {
+        createHomeTicketFailure(state, action: PayloadAction<string>) {
             state.loading = false;
             state.error = action.payload;
         },
-        updateHomeTicketData(state, action: PayloadAction<HomeTicket>) {
-            const { id, ...updatedData } = action.payload;
-            const ticketIndex = state.HomeData.findIndex(
+
+        createHomeTicketData(state, action: PayloadAction<CreateHomeTicket>) {
+            state.dataCreated.push(action.payload);
+        },
+        editHomeTicketStart(state) {
+            state.loading = true;
+            state.error = null;
+        },
+
+        editHomeTicketSuccess(state) {
+            state.loading = false;
+        },
+
+        editHomeTicketFailure(state, action: PayloadAction<string>) {
+            state.loading = false;
+            state.error = action.payload;
+        },
+
+        editHomeTicketData(state, action: PayloadAction<HomeTicket>) {
+            const { id, ...updatedTicket } = action.payload;
+            const index = state.HomeData.findIndex(
                 (ticket) => ticket.id === id
             );
-            if (ticketIndex !== -1) {
-                state.HomeData[ticketIndex] = {
-                    ...state.HomeData[ticketIndex],
-                    ...updatedData,
+
+            if (index !== -1) {
+                state.HomeData[index] = {
+                    ...state.HomeData[index],
+                    ...updatedTicket,
                 };
             }
         },
@@ -84,10 +146,14 @@ export const {
     fetchHomeTicketsSuccess,
     fetchHomeTicketsFailure,
     setSearchHomeTerm,
-    updateHomeTicketData,
-    updateHomeTicketSuccess,
-    updateHomeTicketFailure,
-    updateHomeTicketStart,
+    createHomeTicketStart,
+    createHomeTicketSuccess,
+    createHomeTicketFailure,
+    createHomeTicketData,
+    editHomeTicketStart,
+    editHomeTicketSuccess,
+    editHomeTicketFailure,
+    editHomeTicketData,
 } = HometicketSlice.actions;
 
 export default HometicketSlice.reducer;
@@ -96,7 +162,8 @@ export const searchHomeTickets = (): AppThunk => async (dispatch, getState) => {
     dispatch(fetchHomeTicketsStart());
 
     try {
-        const { searchHomeTerm } = getState().hometicket; // Lấy giá trị searchTerm từ state
+        const { searchHomeTerm } = getState().hometicket;
+
         const dbRef = ref(database);
 
         const snapshot = await get(child(dbRef, "/"));
@@ -109,7 +176,6 @@ export const searchHomeTickets = (): AppThunk => async (dispatch, getState) => {
                     ...ticket[ticketID],
                 }))
                 .filter((ticket) => {
-                    // Kiểm tra từ khóa tìm kiếm trong các trường
                     const {
                         GiaCombo,
                         GiaVe,
@@ -152,20 +218,45 @@ export const searchHomeTickets = (): AppThunk => async (dispatch, getState) => {
         dispatch(fetchHomeTicketsFailure(error.message));
     }
 };
-export const updateHomeTicket =
-    (ticketData: HomeTicket): AppThunk =>
+
+export const createHomeTicket =
+    (ticketData: CreateHomeTicket): AppThunk =>
     async (dispatch) => {
-        dispatch(updateHomeTicketStart());
+        dispatch(createHomeTicketStart());
 
         try {
-            const { id, ...HomeData } = ticketData;
-            await update(ref(database, `Tickets/${id}`), HomeData);
+            const newTicketRef = ref(database, "/");
+            await push(newTicketRef, ticketData);
 
-            dispatch(updateHomeTicketData(ticketData));
-            dispatch(updateHomeTicketSuccess());
-            // toast.info(`Cập nhật thành công! Code:${ticketData.Bookingcode} `);
+            const newTicket: CreateHomeTicket = {
+                ...ticketData,
+            };
+            dispatch(createHomeTicketData(newTicket));
+            dispatch(createHomeTicketSuccess());
+
+            toast.success("Thêm gói vé thành công!");
+            window.location.reload();
         } catch (error: any) {
-            dispatch(updateHomeTicketFailure(error.message));
+            dispatch(createHomeTicketFailure(error.message));
+            toast.error(`Lỗi: ${error.message}`);
+        }
+    };
+
+export const editHomeTicket =
+    (ticketData: HomeTicket): AppThunk =>
+    async (dispatch) => {
+        dispatch(editHomeTicketStart());
+
+        try {
+            const { id, ...updatedTicketData } = ticketData;
+            const ticketRef = ref(database, `${id}`);
+            await update(ticketRef, updatedTicketData);
+
+            dispatch(editHomeTicketSuccess());
+            toast.success("Cập nhật gói vé thành công!");
+            window.location.reload();
+        } catch (error: any) {
+            dispatch(editHomeTicketFailure(error.message));
             toast.error(`Lỗi: ${error.message}`);
         }
     };
